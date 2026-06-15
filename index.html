@@ -662,7 +662,12 @@
             color: var(--orange-bright);
             font-weight: 600;
             font-size: 14px;
-            margin-top: auto
+            margin-top: auto;
+            background: none;
+            border: none;
+            padding: 0;
+            font-family: inherit;
+            cursor: pointer
         }
 
             .more svg {
@@ -1403,100 +1408,17 @@
             stroke-width: 1.8
         }
 
-        /* ============================================================
-           PROJECTS OVERLAY ("Voir toutes nos réalisations")
-           ============================================================ */
-        .proj-backdrop {
-            position: fixed;
-            inset: 0;
-            z-index: 200;
-            background: var(--cream);
-            overflow-y: auto;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity .28s, visibility .28s
-        }
-
-        .proj-backdrop.open {
-            opacity: 1;
-            visibility: visible
-        }
-
-        .proj-overlay-inner {
-            max-width: var(--maxw);
-            margin: 0 auto;
-            padding: 60px var(--gutter) 80px
-        }
-
-        .proj-overlay-head {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 20px;
-            margin-bottom: 48px;
-            flex-wrap: wrap
-        }
-
-        .proj-overlay-head h2 {
-            font-size: 34px;
-            font-weight: 800;
-            letter-spacing: -1px;
-            color: var(--ink)
-        }
-
-        .proj-overlay-close {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: transparent;
-            border: 1.5px solid var(--ink);
-            color: var(--ink);
-            font-family: inherit;
-            font-weight: 700;
-            font-size: 14px;
-            padding: 11px 18px;
-            border-radius: var(--r-pill);
-            cursor: pointer;
-            transition: background .2s, color .2s
-        }
-
-        .proj-overlay-close:hover {
-            background: var(--ink);
-            color: #fff
-        }
-
-        .proj-overlay-close svg {
-            width: 16px;
-            height: 16px;
-            stroke: currentColor;
-            fill: none;
-            stroke-width: 2;
-            pointer-events: none
-        }
-
-        .grid-all {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 24px
-        }
-
-        /* project card inside overlay inherits .proj styles — only thumb is bigger */
-        .grid-all .proj h3 { color: var(--ink) }
-        .grid-all .proj span { color: #8c7c6c }
-
         @media(max-width:980px) {
-            .grid-all { grid-template-columns: repeat(3,1fr) }
             .svc-panel { padding: 36px 28px 40px }
         }
 
         @media(max-width:560px) {
-            .grid-all { grid-template-columns: repeat(2,1fr) }
             .svc-panel { padding: 28px 20px 32px }
             .svc-panel h2 { font-size: 22px }
         }
 
         @media(prefers-reduced-motion:reduce) {
-            .svc-backdrop, .proj-backdrop,
+            .svc-backdrop,
             .svc-panel { transition: none !important }
         }
 
@@ -1848,8 +1770,8 @@
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
                         </a>
                         <a class="btn btn-ghost" href="#realisations">
-                            <span class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg></span>
-                            <span data-i18n="btn.showreel">Voir notre showreel</span>
+                            <span data-i18n="btn.showreel">Voir nos réalisations</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
                         </a>
                     </div>
                 </div>
@@ -1891,25 +1813,25 @@
                         <div class="icon-circle"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="2" /><path d="M3 10h18M7 6l1.5 4M12 6l1.5 4M17 6l1.5 4" /></svg></div>
                         <h3 data-i18n="card1.title">Production cinématographique</h3>
                         <p data-i18n="card1.desc">Films, publicités, clips, documentaires et contenus audiovisuels de qualité.</p>
-                        <a class="more" href="#" data-service="card1"><span data-i18n="more">En savoir plus</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6" /></svg></a>
+                        <button class="more" data-service="card1"><span data-i18n="more">En savoir plus</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6" /></svg></button>
                     </div>
                     <div class="card">
                         <div class="icon-circle"><svg viewBox="0 0 24 24"><path d="M12 3v18M8 7l-5 7a5 5 0 0 0 10 0z M16 7l5 7a5 5 0 0 1-10 0z M6 21h12" /></svg></div>
                         <h3 data-i18n="card2.title">Branding &amp; Identité visuelle</h3>
                         <p data-i18n="card2.desc">Création d'identités fortes et cohérentes pour des marques mémorables.</p>
-                        <a class="more" href="#" data-service="card2"><span data-i18n="more">En savoir plus</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6" /></svg></a>
+                        <button class="more" data-service="card2"><span data-i18n="more">En savoir plus</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6" /></svg></button>
                     </div>
                     <div class="card">
                         <div class="icon-circle"><svg viewBox="0 0 24 24"><path d="M3 11l13-6v14L3 13z M3 11v2 M6 13v4a2 2 0 0 0 4 0v-1" /></svg></div>
                         <h3 data-i18n="card3.title">Marketing &amp; Contenus créatifs</h3>
                         <p data-i18n="card3.desc">Stratégies de contenus, réseaux sociaux et campagnes publicitaires impactantes.</p>
-                        <a class="more" href="#" data-service="card3"><span data-i18n="more">En savoir plus</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6" /></svg></a>
+                        <button class="more" data-service="card3"><span data-i18n="more">En savoir plus</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6" /></svg></button>
                     </div>
                     <div class="card">
                         <div class="icon-circle"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H8l-4 4z" /><path d="M9 9.5a1.5 1.5 0 0 1 3 0c0 1.5-1.5 2-1.5 2" /><circle cx="14.5" cy="10" r=".3" fill="currentColor" /></svg></div>
                         <h3 data-i18n="card4.title">Storytelling &amp; Copywriting</h3>
                         <p data-i18n="card4.desc">Des histoires qui connectent votre marque à votre audience de façon émotionnelle.</p>
-                        <a class="more" href="#" data-service="card4"><span data-i18n="more">En savoir plus</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6" /></svg></a>
+                        <button class="more" data-service="card4"><span data-i18n="more">En savoir plus</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6" /></svg></button>
                     </div>
                 </div>
             </div>
@@ -1968,7 +1890,7 @@
                 <a class="active" href="#accueil"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 10l9-7 9 7v9a2 2 0 0 1-2 2h-4v-6H9v6H5a2 2 0 0 1-2-2z" /></svg><span data-i18n="rail.home">Accueil</span></a>
                 <a href="#contact"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="9" cy="8" r="3" /><path d="M3 20c0-3 3-5 6-5s6 2 6 5" /><circle cx="17" cy="9" r="2.3" /><path d="M16 14c3 0 5 1.6 5 5" /></svg><span data-i18n="rail.contact">Contact</span></a>
                 <a href="#apropos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M8 13l-3-3a2 2 0 0 1 3-3l3 3 4-4a2 2 0 0 1 3 3l-6 6a2 2 0 0 1-3 0z" /><path d="M5 18l3 3" /></svg><span data-i18n="rail.about">À propos</span></a>
-                <a href="#contact" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none" /></svg></a>
+                <a href="https://www.instagram.com/clipmedia.ht" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none" /></svg></a>
             </div>
 
     <!-- FOOTER -->
@@ -2003,10 +1925,10 @@
                         <li><svg viewBox="0 0 24 24"><path d="M12 21s-7-6.3-7-11a7 7 0 0 1 14 0c0 4.7-7 11-7 11z" /><circle cx="12" cy="10" r="2.5" /></svg><a href="https://www.google.com/maps/search/?api=1&amp;query=Port-au-Prince%2C+Ha%C3%AFti" target="_blank" rel="noopener noreferrer"><span data-i18n="foot.address">Port-au-Prince, Haïti</span></a></li>
                     </ul>
                     <div class="socials">
-                        <a href="#contact" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.5" cy="6.5" r="1.1" fill="currentColor" stroke="none" /></svg></a>
-                        <a href="#contact" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M14 8h2V5h-2a3 3 0 0 0-3 3v2H9v3h2v6h3v-6h2.2l.5-3H14V8.5a.5.5 0 0 1 .5-.5z" /></svg></a>
-                        <a href="#contact" aria-label="YouTube"><svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="4" /><path d="M10 9.5l5 2.5-5 2.5z" fill="currentColor" stroke="none" /></svg></a>
-                        <a href="#contact" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3" /><path d="M7 10v7M7 7v.01M11 17v-4a2 2 0 0 1 4 0v4M11 13v4" stroke-linecap="round" /></svg></a>
+                        <a href="https://www.instagram.com/clipmedia.ht" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.5" cy="6.5" r="1.1" fill="currentColor" stroke="none" /></svg></a>
+                        <a href="https://www.facebook.com/clipmedia.ht" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M14 8h2V5h-2a3 3 0 0 0-3 3v2H9v3h2v6h3v-6h2.2l.5-3H14V8.5a.5.5 0 0 1 .5-.5z" /></svg></a>
+                        <a href="https://www.youtube.com/@clipmedia" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="4" /><path d="M10 9.5l5 2.5-5 2.5z" fill="currentColor" stroke="none" /></svg></a>
+                        <a href="https://www.linkedin.com/company/clip-media-ht" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3" /><path d="M7 10v7M7 7v.01M11 17v-4a2 2 0 0 1 4 0v4M11 13v4" stroke-linecap="round" /></svg></a>
                     </div>
                 </div>
             </div>
@@ -2021,7 +1943,7 @@ const I18N = {
     "btn.book":"Prendre rendez-vous",
     "hero.eyebrow":"Nous créons","hero.h1":"Des visuels qui transforment les idées en impact",
     "hero.lead":"Production cinématographique, branding, storytelling et contenus créatifs pour les marques ambitieuses et les entrepreneurs visionnaires.",
-    "btn.discover":"Découvrir nos services","btn.showreel":"Voir notre showreel",
+    "btn.discover":"Découvrir nos services","btn.showreel":"Voir nos réalisations",
     "rail.home":"Accueil","rail.contact":"Contact","rail.about":"À propos",
     "serv.eyebrow":"Nos services","serv.h2":"Des solutions créatives pour valoriser votre marque",
     "serv.sub":"Nous combinons créativité, stratégie et technologie pour créer des contenus visuels qui captent l'attention et marquent les esprits.",
@@ -2057,7 +1979,7 @@ const I18N = {
     "btn.book":"Pran yon randevou",
     "hero.eyebrow":"Nou kreye","hero.h1":"Vizyèl ki transfòme lide an enpak",
     "hero.lead":"Pwodiksyon sinematografik, branding, storytelling ak kontni kreyatif pou mak ki anbisye ak antreprenè ki gen vizyon.",
-    "btn.discover":"Dekouvri sèvis nou yo","btn.showreel":"Gade showreel nou an",
+    "btn.discover":"Dekouvri sèvis nou yo","btn.showreel":"Gade reyalizasyon nou yo",
     "rail.home":"Akèy","rail.contact":"Kontak","rail.about":"Konsènan",
     "serv.eyebrow":"Sèvis nou yo","serv.h2":"Solisyon kreyatif pou valorize mak ou",
     "serv.sub":"Nou konbine kreyativite, estrateji ak teknoloji pou kreye kontni vizyèl ki kenbe atansyon epi make lespri moun.",
@@ -2093,7 +2015,7 @@ const I18N = {
     "btn.book":"Book an appointment",
     "hero.eyebrow":"We create","hero.h1":"Visuals that turn ideas into impact",
     "hero.lead":"Cinematic production, branding, storytelling and creative content for ambitious brands and visionary entrepreneurs.",
-    "btn.discover":"Explore our services","btn.showreel":"Watch our showreel",
+    "btn.discover":"Explore our services","btn.showreel":"See our work",
     "rail.home":"Home","rail.contact":"Contact","rail.about":"About",
     "serv.eyebrow":"Our services","serv.h2":"Creative solutions to elevate your brand",
     "serv.sub":"We combine creativity, strategy and technology to craft visual content that captures attention and stays in mind.",
@@ -2129,7 +2051,7 @@ const I18N = {
     "btn.book":"Reservar una cita",
     "hero.eyebrow":"Creamos","hero.h1":"Visuales que transforman las ideas en impacto",
     "hero.lead":"Producción cinematográfica, branding, storytelling y contenidos creativos para marcas ambiciosas y emprendedores visionarios.",
-    "btn.discover":"Descubre nuestros servicios","btn.showreel":"Ver nuestro showreel",
+    "btn.discover":"Descubre nuestros servicios","btn.showreel":"Ver nuestros proyectos",
     "rail.home":"Inicio","rail.contact":"Contacto","rail.about":"Acerca de",
     "serv.eyebrow":"Nuestros servicios","serv.h2":"Soluciones creativas para valorizar tu marca",
     "serv.sub":"Combinamos creatividad, estrategia y tecnología para crear contenidos visuales que captan la atención y marcan las mentes.",
@@ -2542,7 +2464,10 @@ if(reduce){
   var svcCta     = svcBackdrop.querySelector('#svcCta');
   var svcCtaLbl  = svcBackdrop.querySelector('#svcCtaLabel');
 
+  var svcLastFocused = null;
+
   function openServiceModal(serviceKey){
+    svcLastFocused = document.activeElement;
     /* card1 → svc1 — HTML uses cardN, i18n dict uses svcN */
     var svcKey = serviceKey.replace('card', 'svc');
 
@@ -2581,12 +2506,24 @@ if(reduce){
   function closeServiceModal(){
     svcBackdrop.classList.remove('open');
     unlockScroll();
+    if (svcLastFocused && typeof svcLastFocused.focus === 'function') svcLastFocused.focus();
   }
 
   /* Close on button / backdrop click */
   svcClose.addEventListener('click', closeServiceModal);
   svcBackdrop.addEventListener('click', function(e){
     if(e.target === svcBackdrop) closeServiceModal();
+  });
+
+  /* Tab trap: keep focus inside the open service modal */
+  svcBackdrop.addEventListener('keydown', function(e){
+    if (e.key !== 'Tab' || !svcBackdrop.classList.contains('open')) return;
+    var nodes = svcPanel.querySelectorAll('a[href],button:not([disabled]),input,select,textarea,[tabindex]:not([tabindex="-1"])');
+    var f = Array.prototype.slice.call(nodes).filter(function(el){ return el.offsetParent !== null; });
+    if (!f.length) return;
+    var first = f[0], last = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
   });
 
   /* Wire "En savoir plus" links */
@@ -2597,81 +2534,18 @@ if(reduce){
     });
   });
 
-  /* ── ② PROJECTS OVERLAY ──────────────────────────────────── */
-  var projBackdrop = document.createElement('div');
-  projBackdrop.className = 'proj-backdrop';
-  projBackdrop.setAttribute('role','dialog');
-  projBackdrop.setAttribute('aria-modal','true');
-  projBackdrop.setAttribute('aria-labelledby','projOverlayTitle');
-  projBackdrop.innerHTML =
-    '<div class="proj-overlay-inner">' +
-      '<div class="proj-overlay-head">' +
-        '<h2 id="projOverlayTitle"></h2>' +
-        '<button class="proj-overlay-close" id="projClose">' +
-          '<svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>' +
-          '<span id="projCloseLabel"></span>' +
-        '</button>' +
-      '</div>' +
-      '<div class="grid-all" id="projAllGrid"></div>' +
-    '</div>';
-  document.body.appendChild(projBackdrop);
-
-  var projClose     = projBackdrop.querySelector('#projClose');
-  var projCloseLabel= projBackdrop.querySelector('#projCloseLabel');
-  var projTitle     = projBackdrop.querySelector('#projOverlayTitle');
-  var projAllGrid   = projBackdrop.querySelector('#projAllGrid');
-
-  function buildOverlayCard(project){
-    return window.buildProjCard(project, function(proj){
-      if (typeof window.openProjectDetail === 'function') window.openProjectDetail(proj);
-    });
-  }
-
-  function openProjectsOverlay(){
-    projTitle.textContent      = t('overlay.title');
-    projCloseLabel.textContent = t('modal.close');
-
-    projAllGrid.innerHTML = '';
-    var projects = window.__cipProjects || [];
-
-    if(!projects.length){
-      var msg = document.createElement('p');
-      msg.style.cssText = 'color:#8c7c6c;font-size:15px;grid-column:1/-1';
-      msg.textContent = 'Aucun projet disponible.';
-      projAllGrid.appendChild(msg);
-    } else {
-      /* Show ALL projects, not limited */
-      projects.forEach(function(p){ projAllGrid.appendChild(buildOverlayCard(p)); });
-    }
-
-    projBackdrop.classList.add('open');
-    lockScroll();
-    projClose.focus();
-    projBackdrop.scrollTop = 0;
-  }
-
-  function closeProjectsOverlay(){
-    projBackdrop.classList.remove('open');
-    unlockScroll();
-  }
-
-  projClose.addEventListener('click', closeProjectsOverlay);
-
-  /* ── ESC closes whichever overlay is open ──────────────────── */
+  /* ── ESC closes service modal ─────────────────────────────── */
   document.addEventListener('keydown', function(e){
     if(e.key !== 'Escape') return;
     if(svcBackdrop.classList.contains('open'))  closeServiceModal();
-    if(projBackdrop.classList.contains('open')) closeProjectsOverlay();
   });
 
-  /* ── Re-translate overlays when language switches ────────── */
+  /* ── Re-translate service modal when language switches ───────── */
   var _origSetLang = (typeof setLang === 'function') ? setLang : null;
   if(_origSetLang){
     window.setLang = function(lang){
       _origSetLang(lang);
       svcClose.setAttribute('aria-label', t('modal.close'));
-      projCloseLabel.textContent = t('modal.close');
-      projTitle.textContent      = t('overlay.title');
     };
   }
 
