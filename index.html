@@ -1999,7 +1999,7 @@ const I18N = {
     "foot.nav":"Navigation","foot.quick":"Liens rapides","foot.contact":"Contact","foot.address":"Port-au-Prince, Haïti",
     "foot.copyright":"© 2025 CIP Media. Tous droits réservés.",
     "skip":"Aller au contenu",
-    "modal.close":"Fermer","modal.book":"Prendre rendez-vous","overlay.title":"Toutes nos réalisations","detail.viewproject":"Voir le projet",
+    "proj.empty":"Aucun projet trouvé.","proj.error":"Les projets ne sont pas disponibles pour le moment.","modal.close":"Fermer","modal.book":"Prendre rendez-vous","overlay.title":"Toutes nos réalisations","detail.viewproject":"Voir le projet",
     "svc1.tag":"Audiovisuel","svc2.tag":"Design","svc3.tag":"Digital","svc4.tag":"Rédaction",
     "svc1.modal.title":"Production cinématographique",
     "svc1.modal.desc":"De la conception à la post-production, nous créons des contenus audiovisuels qui captivent et convertissent. Chaque projet est traité avec une précision technique et une sensibilité artistique au service de votre message.",
@@ -2035,7 +2035,7 @@ const I18N = {
     "foot.nav":"Navigasyon","foot.quick":"Lyen rapid","foot.contact":"Kontak","foot.address":"Pòtoprens, Ayiti",
     "foot.copyright":"© 2025 CIP Media. Tout dwa rezève.",
     "skip":"Ale nan kontni an",
-    "modal.close":"Fèmen","modal.book":"Pran yon randevou","overlay.title":"Tout reyalizasyon nou yo","detail.viewproject":"Gade pwojè a",
+    "proj.empty":"Pa gen pwojè ki jwenn.","proj.error":"Pwojè yo pa disponib pou kounye a.","modal.close":"Fèmen","modal.book":"Pran yon randevou","overlay.title":"Tout reyalizasyon nou yo","detail.viewproject":"Gade pwojè a",
     "svc1.tag":"Odyovizyèl","svc2.tag":"Desiñ","svc3.tag":"Dijital","svc4.tag":"Redaksyon",
     "svc1.modal.title":"Pwodiksyon sinematografik",
     "svc1.modal.desc":"Depi konsepsyon rive nan pòs-pwodiksyon, nou kreye kontni odyovizyèl ki kaptive ak konvèti. Chak pwojè trete ak presizyon teknik ak sansibilite atistik.",
@@ -2071,7 +2071,7 @@ const I18N = {
     "foot.nav":"Navigation","foot.quick":"Quick links","foot.contact":"Contact","foot.address":"Port-au-Prince, Haiti",
     "foot.copyright":"© 2025 CIP Media. All rights reserved.",
     "skip":"Skip to content",
-    "modal.close":"Close","modal.book":"Book an appointment","overlay.title":"All our work","detail.viewproject":"View project",
+    "proj.empty":"No projects found.","proj.error":"Projects are unavailable right now.","modal.close":"Close","modal.book":"Book an appointment","overlay.title":"All our work","detail.viewproject":"View project",
     "svc1.tag":"Audiovisual","svc2.tag":"Design","svc3.tag":"Digital","svc4.tag":"Copywriting",
     "svc1.modal.title":"Cinematic production",
     "svc1.modal.desc":"From concept to post-production, we create audiovisual content that captivates and converts. Every project is handled with technical precision and artistic sensitivity in service of your message.",
@@ -2107,7 +2107,7 @@ const I18N = {
     "foot.nav":"Navegación","foot.quick":"Enlaces rápidos","foot.contact":"Contacto","foot.address":"Puerto Príncipe, Haití",
     "foot.copyright":"© 2025 CIP Media. Todos los derechos reservados.",
     "skip":"Saltar al contenido",
-    "modal.close":"Cerrar","modal.book":"Reservar una cita","overlay.title":"Todos nuestros proyectos","detail.viewproject":"Ver el proyecto",
+    "proj.empty":"No se encontraron proyectos.","proj.error":"Los proyectos no están disponibles por el momento.","modal.close":"Cerrar","modal.book":"Reservar una cita","overlay.title":"Todos nuestros proyectos","detail.viewproject":"Ver el proyecto",
     "svc1.tag":"Audiovisual","svc2.tag":"Diseño","svc3.tag":"Digital","svc4.tag":"Redacción",
     "svc1.modal.title":"Producción cinematográfica",
     "svc1.modal.desc":"Desde la concepción hasta la postproducción, creamos contenido audiovisual que cautiva y convierte. Cada proyecto se trata con precisión técnica y sensibilidad artística al servicio de tu mensaje.",
@@ -2254,6 +2254,13 @@ if(reduce){
 
   var grid = document.getElementById('projectsGrid');
 
+  /* localized string lookup (falls back to French) */
+  function tr(key){
+    var lang = document.documentElement.lang || 'fr';
+    var dict = (typeof I18N !== 'undefined') && (I18N[lang] || I18N['fr']);
+    return (dict && dict[key]) || '';
+  }
+
   /* ── Shared card builder (used by main grid + overlay) ────── */
   window.buildProjCard = function(project, onClick) {
     var div = document.createElement('div');
@@ -2268,7 +2275,7 @@ if(reduce){
 
     if (project.imageUrl) {
       var img = document.createElement('img');
-      img.src      = project.imageUrl + '?w=600&auto=format';
+      img.src      = project.imageUrl + '?w=700&h=525&fit=crop&auto=format';
       img.alt      = project.title;
       img.loading  = 'lazy';
       img.decoding = 'async';
@@ -2311,7 +2318,7 @@ if(reduce){
     if (!projects || !projects.length) {
       var msg = document.createElement('p');
       msg.style.cssText = 'color:#8c7c6c;font-size:15px;grid-column:1/-1';
-      msg.textContent = 'Aucun projet trouvé.';
+      msg.textContent = tr('proj.empty') || 'Aucun projet trouvé.';
       grid.appendChild(msg);
       /* Hide "view all" when nothing to show */
       var btn = document.getElementById('btnViewAll');
@@ -2381,19 +2388,24 @@ if(reduce){
   }
 
   /* Re-render on resize (mobile ↔ desktop limit changes) */
-  var _resizeTimer;
+  var _resizeTimer, _lastLimit = getGridLimit();
   window.addEventListener('resize', function(){
     clearTimeout(_resizeTimer);
     _resizeTimer = setTimeout(function(){
-      if (window.__cipProjects && window.__cipProjects.length) {
+      var lim = getGridLimit();
+      if (lim !== _lastLimit && window.__cipProjects && window.__cipProjects.length) {
+        _lastLimit = lim;
         renderProjects(window.__cipProjects);
       }
     }, 200);
   }, { passive: true });
 
-  /* Fetch from Sanity CDN */
-  fetch(API_URL)
+  /* Fetch from Sanity CDN (with timeout) */
+  var ctrl = (typeof AbortController !== 'undefined') ? new AbortController() : null;
+  var tid  = ctrl ? setTimeout(function(){ ctrl.abort(); }, 8000) : null;
+  fetch(API_URL, ctrl ? { signal: ctrl.signal } : undefined)
     .then(function(res){
+      if (tid) clearTimeout(tid);
       if (!res.ok) throw new Error('HTTP ' + res.status);
       return res.json();
     })
@@ -2402,12 +2414,13 @@ if(reduce){
       renderProjects(data.result);
     })
     .catch(function(err){
+      if (tid) clearTimeout(tid);
       console.warn('[CIP Media] Sanity fetch error:', err);
       if (grid) {
         grid.innerHTML = '';
         var msg = document.createElement('p');
         msg.style.cssText = 'color:#8c7c6c;font-size:15px;grid-column:1/-1';
-        msg.textContent = 'Les projets ne sont pas disponibles pour le moment.';
+        msg.textContent = tr('proj.error') || 'Les projets ne sont pas disponibles pour le moment.';
         grid.appendChild(msg);
       }
     });
@@ -2662,12 +2675,14 @@ if(reduce){
   var detailWaLbl= backdrop.querySelector('#detailWaLabel');
   var detailExt  = backdrop.querySelector('#detailExt');
   var detailExtLbl=backdrop.querySelector('#detailExtLabel');
+  var lastFocused = null;
 
   /* ── Open ──────────────────────────────────────────────────── */
   window.openProjectDetail = function(project) {
+    lastFocused = document.activeElement;
     /* Image */
     if (project.imageUrl) {
-      detailImg.src = project.imageUrl + '?w=1200&auto=format';
+      detailImg.src = project.imageUrl + '?w=1200&fit=max&auto=format';
       detailImg.alt = project.title;
       detailImg.style.display = 'block';
     } else {
@@ -2717,6 +2732,7 @@ if(reduce){
   function closeDetail(){
     backdrop.classList.remove('open');
     document.body.style.overflow = '';
+    if (lastFocused && typeof lastFocused.focus === 'function') lastFocused.focus();
   }
 
   closeBtn.addEventListener('click', closeDetail);
@@ -2725,6 +2741,17 @@ if(reduce){
   });
   document.addEventListener('keydown', function(e){
     if (e.key === 'Escape' && backdrop.classList.contains('open')) closeDetail();
+  });
+
+  /* Focus trap: keep Tab within the open modal */
+  backdrop.addEventListener('keydown', function(e){
+    if (e.key !== 'Tab' || !backdrop.classList.contains('open')) return;
+    var nodes = panel.querySelectorAll('a[href],button:not([disabled]),input,select,textarea,[tabindex]:not([tabindex="-1"])');
+    var f = Array.prototype.slice.call(nodes).filter(function(el){ return el.offsetParent !== null; });
+    if (!f.length) return;
+    var first = f[0], last = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
   });
 
 })();
