@@ -1224,6 +1224,33 @@
             .skel { animation: none }
         }
 
+        /* Image placeholder: shimmer shown until each thumbnail loads, then fades in */
+        .thumb.img-loading {
+            background: linear-gradient(90deg,#e8ddd4 25%,#f2ebe3 50%,#e8ddd4 75%);
+            background-size: 600px 100%;
+            animation: shimmer 1.4s infinite linear;
+        }
+        .thumb img {
+            opacity: 0;
+            transition: opacity .5s cubic-bezier(.22,.61,.36,1);
+        }
+        .thumb img.loaded { opacity: 1 }
+        @media(prefers-reduced-motion:reduce) {
+            .thumb.img-loading { animation: none }
+            .thumb img { transition: none }
+        }
+
+        /* Smooth collapse when the "view all" button hides */
+        #btnViewAll.btn-hiding {
+            opacity: 0;
+            transform: translateY(-6px) scale(.96);
+            pointer-events: none;
+            transition: opacity .35s ease, transform .35s ease;
+        }
+        @media(prefers-reduced-motion:reduce) {
+            #btnViewAll.btn-hiding { transition: none }
+        }
+
         /* ============================================================
            SERVICE MODAL
            ============================================================ */
@@ -2283,11 +2310,21 @@ if(reduce){
     thumbDiv.className = 'thumb';
 
     if (project.imageUrl) {
+      thumbDiv.classList.add('img-loading');
       var img = document.createElement('img');
-      img.src      = project.imageUrl + '?w=700&h=525&fit=crop&auto=format';
       img.alt      = project.title;
       img.loading  = 'lazy';
       img.decoding = 'async';
+      img.addEventListener('load', function(){
+        thumbDiv.classList.remove('img-loading');
+        img.classList.add('loaded');
+      });
+      img.addEventListener('error', function(){
+        thumbDiv.classList.remove('img-loading');
+        thumbDiv.style.background = '#d8cfc5';
+        img.remove();
+      });
+      img.src      = project.imageUrl + '?w=700&h=525&fit=crop&auto=format';
       thumbDiv.appendChild(img);
     } else {
       thumbDiv.style.background = '#d8cfc5';
@@ -2377,7 +2414,17 @@ if(reduce){
               });
             }
           });
-          freshBtn.style.display = 'none';
+          freshBtn.classList.add('btn-hiding');
+          if (reduce) {
+            freshBtn.style.display = 'none';
+          } else {
+            var hideDone = function(){
+              freshBtn.style.display = 'none';
+              freshBtn.removeEventListener('transitionend', hideDone);
+            };
+            freshBtn.addEventListener('transitionend', hideDone);
+            setTimeout(hideDone, 450); /* fallback if transitionend doesn't fire */
+          }
         });
       }
     }
